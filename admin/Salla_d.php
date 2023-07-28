@@ -1,10 +1,5 @@
-<?php
-
- //DONE
-    ?>
-    
     <?php
-include "includes/header-dashboard.php";
+include "includes/header-dashboard.php";// include the header-dashboard file whuch includes all header in this page
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -268,8 +263,8 @@ include "includes/header-dashboard.php";
 <input class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="sub" value="Search">
 </form>
 <?php
-if(isset($_POST['sub'])){
-	$search="";
+if(isset($_POST['sub'])){// if its set input with name sub search set to "" then switch to the fields that we want to search and then search it if the desired field that we choose it matches with the search
+	$search=""; 
 	switch($_POST['mySelect']){
 		case 'Emri Salles':
 			$search=$_POST['search'];
@@ -296,6 +291,7 @@ if(isset($_POST['sub'])){
 
 }
 else{
+	// if there is no search written then call showtable function to print all the fields in tale sallat
 $array=array();
 $table="sallat";
  showtable($table,$array);
@@ -393,32 +389,29 @@ $table="sallat";
 	
 
 <script>
-	var array=[];
-	$('a.edit').click(function(){
-var id = $(this).attr('id');
-if(isNaN(id)){
-	var id2=parseInt(id);
+	var array=[];// set array to empty
+	$('a.edit').click(function(){// if a class='edit' is clicked then call this function
+var id = $(this).attr('id');// get the id value of id
+if(isNaN(id)){// check if its not an number
+	var id2=parseInt(id);// get the int value of id
 }
 else{
-	var id2=id;
+	var id2=id;// set id2 to id
 }
-$('#hidden').val(id2);
+$('#hidden').val(id2);// insert the value of id2 in hidden id input
 	})
-
+// a class='delete' when its clicked its called the function 
 $('a.delete').click(function(){	
-var id = $(this).attr('id');
-console.log(id+" this is ID");
+var id = $(this).attr('id');// get the id  of that element DOM and if is not number make it int and insert the value in hiddent ID
 if(isNaN(id)){
 	var id2=parseInt(id);
 }
 else{
 	var id2=id;
 }
-
-console.log(id);
 $('#hidden2').val(id);
 	})
-
+// if input class='check' when its clicked and excecute the function set check false and get the id and push if it doesnt excist in array but if it excists pop it and push it in input hidden if it has something in array 
 $('input.check').click(function(){
 	var check = false;
   var id = $(this).attr('id');
@@ -439,53 +432,30 @@ if(array.length>0){
 }
   console.log(array);
 	})
-                 // Get the form and input elements
-    //             var form = document.getElementById('myform');
-    //             var input = document.getElementById('myInput');
-
-    //             // Set the value of the input element
-    //             input.value = 'Your value here';
-
-    //             // Submit the form
-    //             form.submit();
-    //         });
-    //     });
 </script>
 </body>
 </html>
 <?php
 
 if(isset($_POST['submitadd'])){
-	// isset($_POST['name']) && isset($_FILES['image']) && isset($_POST['content'])&& isset($_POST['viti']) && isset($_POST['Titulli']) && isset($_FILES['movie'])
-	if(true){
-
-$array=['salla_name','Nr_Uleseve','Rezolucioni'];
-$salla=$_POST['Salla'];
-$kapaciteti=intval($_POST['Kapaciteti']);
+$array=['salla_name','Nr_Uleseve','Rezolucioni'];// check if array have field names
+$salla=$_POST['Salla'];// check if salla is POST['salla']
+$kapaciteti=intval($_POST['Kapaciteti']);// kapaciteti with intvalue of kapaciteti
 $rez=$_POST['Rez'];
 $query = "INSERT INTO $table (salla_name, Nr_Uleseve, Rezolucioni)
-VALUES ('$salla', $kapaciteti, '$rez')";
-mysqli_query($connection, $query);  
-echo "<script>window.location.href='Salla_d.php'</script>";
+VALUES ('$salla', $kapaciteti, '$rez')";// inserti into table on thoise fields tis values
+mysqli_query($connection, $query);  // send request to server
+echo "<script>window.location.href='Salla_d.php'</script>";// reload page
 }
-}
-?>
-
-<?php
- // Assign a default value to $id
-
-
-
+//if submitedit name is ser and then go in if scope get the id and edit with array of fields name and values as array of values if these fields
 	 if (isset($_POST['submitedit'])) {
-		if(true){
 		$id=intval($_POST['hid']);
             $array=['salla_name','Nr_Uleseve','Rezolucioni'];
 		$values=[$_POST['Salla2'],intval($_POST['Kapaciteti2']),$_POST['Rez2']];
 	    edit($table,$id,$array,$values);
-		echo("<script>window.location.href='Salla_d.php'</script>");
+		echo("<script>window.location.href='Salla_d.php'</script>");// reload the page
 }
-}
-    if(isset($_POST['submitdelete'])){
+    if(isset($_POST['submitdelete'])){// check if submitdelete is checked and then if it is empty then delete if it has comma delete all that are in array and if it isnt empty and dont have comma then delete just that one value
 		$id=intval($_POST['hiden']);
 		$all="";
 		if(empty($_POST['hiden'])){
@@ -506,45 +476,4 @@ delete_product($table,$id);
 		}
 echo("<script>window.location.href='Salla_d.php'</script>");
 	}
-
-// 	echo "<script>alert('Kosovo polje')</script>";
-// 		if(true){
-// 		$post_image=$_FILES['image']['name'];
-// 		$post_video=$_FILES['movie']['name'];
-// 		$post_temp_file=$_FILES['image']['tmp_name'];
-// 		$post_temp2=$_FILES['movie']['tmp_name'];
-// 		$id=getid();
-// 		$query="SELECT * FROM movies_post where ID=$id";
-// 		$fetch=mysqli_query($connection,$query);
-// 		if($fetch){
-// 		while($row=mysqli_fetch_assoc($fetch)){
-// $delete_image=$row['image_url'];
-// $delete_video=$row['videoURL'];
-// $file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";
-// $file_path2 = "C:/xampp/htdocs/MOVIES/videos/$delete_video";
-// if (file_exists($file_path1)&&file_exists($file_path2)) {
-//     if (unlink($file_path)) {
-//     } else {
-
-//     }
-// }
-//  else {
-//     // File does not exist
-//     echo "File not found";
-// echo "<script>alert('hyri')</script>";
-// }
-        
-// 		}
-// 	}
-// 		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
-// 		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos/$post_video");
-
-// 		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content"];
-// 		$values=["Hekuran","images/" . $post_image,"sfja", date('Y-m-d H:i:s'),$_POST['viti'],"videos/".$post_video,$_POST['content']];
-// 	edit("movies_post",$id,$array,$values);
-// }
-// }
-// else{
-// 	echo "<h1 style='color:red'>'hek'</h1>";
-// }
-// ?> 
+ ?> 

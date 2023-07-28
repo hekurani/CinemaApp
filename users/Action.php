@@ -114,6 +114,7 @@
 </head>
 <body>
 	<?php
+	// include files for dbconnection and header and validate and then look if genre is the action and add movies product inpage
 	include "includes_user//header_test.php";
 	include "../includes/dbconnection.php";
 	validate();
@@ -161,6 +162,7 @@ if(!isset($_POST['sub'])){
 	}
 }
 else{
+	// if you search here it shows you for what you have searched
 	$search=$_POST['search'];
 	Search_db($search);
 		$query="SELECT * from movies_post where Tittle='$search'";

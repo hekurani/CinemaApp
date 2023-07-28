@@ -192,19 +192,21 @@ else{
   </div>
 </div>
 <?php
+// the logic downthere is for uploading an image to directory images and select users where ID is id that is saved in the moment that users are loged in and can be changed and are removed the old file 
+// when we click change the profile
 if(isset($_POST['prof'])){
-    $post_image = $_FILES['imageUpload']['name'];
-    $id = $_SESSION['ID'];
-    $query1 = "SELECT * FROM users WHERE ID=$id";
-    $fetch = mysqli_query($connection, $query1);
+    $post_image = $_FILES['imageUpload']['name'];// get the name of file
+    $id = $_SESSION['ID'];// get the id
+    $query1 = "SELECT * FROM users WHERE ID=$id";// select All users
+    $fetch = mysqli_query($connection, $query1);// send the request to server for getting all elements of table
     while($row = mysqli_fetch_assoc($fetch)){
-      $profile = $row['profile_picture'];
+      $profile = $row['profile_picture'];// get the profile picture
     }
-    unlink("images//$profile");
-    $query = "UPDATE users SET profile_picture='$post_image' WHERE ID=$id";
-    mysqli_query($connection, $query);
-    move_uploaded_file($_FILES['imageUpload']['tmp_name'], "C://xampp//htdocs//MOVIES//images//$post_image");
-    $_SESSION['profile']=$post_image;
+    unlink("images//$profile");// remove the image from image folder
+    $query = "UPDATE users SET profile_picture='$post_image' WHERE ID=$id";// update the users and set to actual link
+    mysqli_query($connection, $query);// send the request to server
+    move_uploaded_file($_FILES['imageUpload']['tmp_name'], "C://xampp//htdocs//MOVIES//images//$post_image");// upload file to this directory
+    $_SESSION['profile']=$post_image;//and riinitialize the SESSION variable
   }
 ?>
 <script>

@@ -1,5 +1,5 @@
     <?php
-include "includes/header-dashboard.php";
+include "includes/header-dashboard.php";// include header file
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -265,9 +265,9 @@ include "includes/header-dashboard.php";
 	<input class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="sub" value="Search">
 </form>  
 <?php
-if(isset($_POST['sub'])&&!empty($_POST['search'])){
-	$search="";
-	switch($_POST['mySelect']){
+if(isset($_POST['sub'])&&!empty($_POST['search'])){// check if its not empty search and if its clicked
+	$search="";// empty variable
+	switch($_POST['mySelect']){//switch for what you want to search for and then send request for searching in that field where that fields and search input are same
 		case 'Title':
 			$search=$_POST['search'];
 			$query="SELECT * from movies_post where Tittle='$search'";
@@ -299,6 +299,7 @@ if(isset($_POST['sub'])&&!empty($_POST['search'])){
 		}
 }
 else{
+	// in other case make na empty array and show table functon for printin all the table with all information of table
 $array=array();
 $table="movies_post";
  showtable($table,$array);
@@ -319,10 +320,6 @@ $table="movies_post";
 							<label>content:</label>
 							<textarea class="form-control" name="content" required></textarea>
 						</div>				
-						<!-- <div class="form-group">
-							<label>Movie-Name:</label>
-							<input type="text" name="name" class="form-control" required>
-						</div> -->
 						<div class="form-group">
 							<label>choose-image:</label>
 							<input type="file" name="image" class="form-control" required>
@@ -360,9 +357,9 @@ $table="movies_post";
 	<label for="salla">Salla:</label>
 	<select name="Salla" id="salla" class="form-control" required>
 <?php
-$query="SELECT * from sallat";
-$fetch=mysqli_query($connection,$query);
-while($row=mysqli_fetch_assoc($fetch)){
+$query="SELECT * from sallat";// SELECT ALL from table sallat
+$fetch=mysqli_query($connection,$query);//fetch all the data from table sallat and sending requst for mysqli_query
+while($row=mysqli_fetch_assoc($fetch)){// for every row enter the while loop it means show all sallatfor that movie available
 	echo '<option value='.$row['salla_name'].'>'.$row['salla_name'].'</option>';
 }
 ?>
@@ -379,7 +376,7 @@ while($row=mysqli_fetch_assoc($fetch)){
 		</div>
 	</div>
 	<?php
-if(isset($_POST['id'])){
+if(isset($_POST['id'])){// is it set input name='id' taht means get the id and select ALL from movies and for every row get the content and description
 		$id=intval($_POST['id']);
 		$query="SELECT * FROM movies_post where ID=$id";
 	$fetch=mysqli_query($connection,$query);
@@ -437,6 +434,7 @@ $content=$row['content'];
 	<label for="salla">Salla:</label>
 	<select name="Salla2" id="salla" class="form-control">
 <?php
+//select all from salla and show slla_name
 $query="SELECT * from sallat";
 $fetch=mysqli_query($connection,$query);
 while($row=mysqli_fetch_assoc($fetch)){
@@ -488,6 +486,7 @@ while($row=mysqli_fetch_assoc($fetch)){
 	
 
 <script>
+	// if a .edit is clicked then make int that id of a .edit and push that value in hidden same with a .delete
 	var array=[];
 	$('a.edit').click(function(){
 var id = $(this).attr('id');
@@ -510,7 +509,7 @@ else{
 console.log(id);
 $('#hidden2').val(id2);
 	})
-
+// if input class='check' when its clicked and excecute the function set check false and get the id and push if it doesnt excist in array but if it excists pop it and push it in input hidden if it has something in array 
 $('input.check').click(function(){
 	var check = false;
   var id = $(this).attr('id');
@@ -530,31 +529,22 @@ $('input.check').click(function(){
 if(array.length>0){
 	$('#hidden2').val(array);
 }
-  console.log(array);
 	})
-                 // Get the form and input elements
-    //             var form = document.getElementById('myform');
-    //             var input = document.getElementById('myInput');
-
-    //             // Set the value of the input element
-    //             input.value = 'Your value here';
-
-    //             // Submit the form
-    //             form.submit();
-    //         });
-    //     });
 </script>
 </body>
 </html>
 <?php
 
-if(isset($_POST['submitadd'])){
+if(isset($_POST['submitadd'])){// is it set submitadd input
 	// isset($_POST['name']) && isset($_FILES['image']) && isset($_POST['content'])&& isset($_POST['viti']) && isset($_POST['Titulli']) && isset($_FILES['movie'])
 	if(isset($_FILES['image']) && isset($_POST['content'])&& isset($_POST['viti']) && isset($_POST['Titulli']) && isset($_FILES['movie'])){
-$post_image=$_FILES['image']['name'];
+// if inputs are set then go inside if scope
+		$post_image=$_FILES['image']['name'];// get the file of the name 'name' and get the of movie
 $post_video=$_FILES['movie']['name'];
+//get the name of each file
 $post_temp_file=$_FILES['image']['tmp_name'];
 $post_temp2=$_FILES['movie']['tmp_name'];
+// upload files in that direcory and then get all the values of inputs and set array of field name and set values of each field and then add all values in table and fields and reload page
 move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
 move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos23/$post_video");
 $cmimi=intval($_POST['Cmimi']);
@@ -573,30 +563,29 @@ add("movies_post",$array,$values,"Products_prova.php");
 <?php
  // Assign a default value to $id
 	 if (isset($_POST['submitedit'])) {
-		if(true){
+// get the image and movie and their name in variables
 		$post_image=$_FILES['image2']['name'];
 		$post_video=$_FILES['movie2']['name'];
 		$post_temp_file=$_FILES['image2']['tmp_name'];
 		$post_temp2=$_FILES['movie2']['tmp_name'];
 		$id=intval($_POST['id']);
-		$query="SELECT * FROM movies_post where ID=$id";
+		$query="SELECT * FROM movies_post where ID=$id";// make query SELECT ALL from movies_post where ID is same with id variable
 		$fetch=mysqli_query($connection,$query);
-		while($row=mysqli_fetch_assoc($fetch)){
-$delete_image=$row['image_url'];
+		while($row=mysqli_fetch_assoc($fetch)){// iterate per one row
+$delete_image=$row['image_url'];//set variable delete_image to link of image that we want to edit and at the delet_video
 $delete_video=$row['videoURL'];
-$file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";
-$file_path2 = "C:/xampp/htdocs/MOVIES/videos23/$delete_video";
-if (file_exists($file_path1)&&file_exists($file_path2)) {
+$file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";// path of image that we want to edit
+$file_path2 = "C:/xampp/htdocs/MOVIES/videos23/$delete_video";// path of vide that we want to edit
+if (file_exists($file_path1)&&file_exists($file_path2)) {// if files excist then remove from that directory
     if (unlink($file_path1)&& unlink($file_path2)) {
-
-    } else {
 
     }
   }
 }
-		$query="SELECT * FROM movies_post WHERE ID=$id";
-		$fetch=mysqli_query($connection,$query);
-		while($row=mysqli_fetch_assoc($fetch)){
+//send the request for fetching data from movies_post where ID of table is like id varibale from input hidden
+	$query="SELECT * FROM movies_post WHERE ID=$id";
+		$fetch=mysqli_query($connection,$query);// fetch the data 
+		while($row=mysqli_fetch_assoc($fetch)){// for every row set these variables to specified field values
 			$title=$row["Tittle"];
 			$image=$row["image_url"];
 			$zhandri=$row["Zhandri"];
@@ -607,7 +596,7 @@ if (file_exists($file_path1)&&file_exists($file_path2)) {
 			$data=$row["Data_luajtjes"];
 			$cmimi=$row["cmimi"];
 		}
-		if(empty($_POST['Title'])){
+		if(empty($_POST['Title'])){// if its empty POST set that to what we watn to edit and the same for all 
 			$_POST['Title']=$title;
 		}
 		if(empty($post_image)){
@@ -636,76 +625,34 @@ $post_video=$video;
 		if(empty($_POST['Cmimi2'])){
 			$_POST['Cmimi2']=$cmimi;
 		}
-		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
-		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos23/$post_video");
+		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");// upload the file here in this directory
+		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos23/$post_video");// upload the file video in this directory
 
-		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content","Salla","Data_luajtjes","cmimi"];
-		$values=[$_POST['Title'],"images/" . $post_image,$_POST['zhandri'],$_POST['viti'], date('Y-m-d H:i:s'),"videos23/".$post_video,$_POST['content'],$_POST['Salla2'],$_POST['Data2'],intval($_POST['Cmimi2'])];
-	    edit("movies_post",$id,$array,$values);
-		 echo("<script>window.location.href='Products_prova.php'</script>");
+		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content","Salla","Data_luajtjes","cmimi"];// array of field names
+		$values=[$_POST['Title'],"images/" . $post_image,$_POST['zhandri'],$_POST['viti'], date('Y-m-d H:i:s'),"videos23/".$post_video,$_POST['content'],$_POST['Salla2'],$_POST['Data2'],intval($_POST['Cmimi2'])]; //array of values of fields
+	    edit("movies_post",$id,$array,$values);// call edit function
+		 echo("<script>window.location.href='Products_prova.php'</script>");//reload the page
+
 }
-}
-    if(isset($_POST['submitdelete'])){
-		$id=intval($_POST['hiden']);
-		$all="";
-		if(empty($_POST['hiden'])){
+    if(isset($_POST['submitdelete'])){// if its set input name="submitdelete" which deletes all the page
+		$id=intval($_POST['hiden']);// set id to integer value of inmput hidden
+		$all="";// set all varaible to empty
+		if(empty($_POST['hiden'])){// if input name='hiden' is empty then delete all posts
 			$query="DELETE FROM movies_post";
 			$query=mysqli_query($connection,$query);
 		}
 		
-		else if(strpos($_POST['hiden'], ',') !== false){
+		else if(strpos($_POST['hiden'], ',') !== false){// if it includes some , in hiden input then create an array of that with how much comma there is +1
 			$array = explode(",", $_POST['hiden']);
-		    for($i=0;$i<count($array);$i++){
+		    for($i=0;$i<count($array);$i++){//iterate in array and for each iteation delete all the ID in table with the same as are numbers in array
 				$temp=intval($array[$i]);
 				$query="DELETE from movies_post WHERE ID=$temp";
 				mysqli_query($connection,$query);
 			}
 		}
 		else{
+			// here it deletes only one product itf it is only one
 delete_product("movies_post",$id);
 		}
- echo("<script>window.location.href='Products_prova.php'</script>");
-	}
-
-// 	echo "<script>alert('Kosovo polje')</script>";
-// 		if(true){
-// 		$post_image=$_FILES['image']['name'];
-// 		$post_video=$_FILES['movie']['name'];
-// 		$post_temp_file=$_FILES['image']['tmp_name'];
-// 		$post_temp2=$_FILES['movie']['tmp_name'];
-// 		$id=getid();
-// 		$query="SELECT * FROM movies_post where ID=$id";
-// 		$fetch=mysqli_query($connection,$query);
-// 		if($fetch){
-// 		while($row=mysqli_fetch_assoc($fetch)){
-// $delete_image=$row['image_url'];
-// $delete_video=$row['videoURL'];
-// $file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";
-// $file_path2 = "C:/xampp/htdocs/MOVIES/videos/$delete_video";
-// if (file_exists($file_path1)&&file_exists($file_path2)) {
-//     if (unlink($file_path)) {
-//     } else {
-
-//     }
-// }
-//  else {
-//     // File does not exist
-//     echo "File not found";
-// echo "<script>alert('hyri')</script>";
-// }
-        
-// 		}
-// 	}
-// 		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
-// 		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos/$post_video");
-
-// 		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content"];
-// 		$values=["Hekuran","images/" . $post_image,"sfja", date('Y-m-d H:i:s'),$_POST['viti'],"videos/".$post_video,$_POST['content']];
-// 	edit("movies_post",$id,$array,$values);
-// }
-// }
-// else{
-// 	echo "<h1 style='color:red'>'hek'</h1>";
-// }
-
-// ?> 
+ echo("<script>window.location.href='Products_prova.php'</script>");// reload the page
+	} ?> 

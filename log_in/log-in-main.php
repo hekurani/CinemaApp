@@ -276,6 +276,8 @@ color:#f5f5f5;
         </div>
     </div>
 	<script type="text/javascript">
+		// when document(webpage) is opened then when in signup username is written it livechecks it if it matches the requirements
+		//if not then it inserts some text under that
 $(document).ready(function(){
 $('#user2').keyup(function(){
 var name=$('#user2').val();
@@ -319,6 +321,7 @@ success:function(data){
 </body>
 </html>
 <?php
+// here it inserts the value of signup if its not has the same values of another user
 $check=false;
 if(isset($_POST['submit'])){
 $array=["username","password","email","profile_picture","gjinia","roli"];
@@ -336,14 +339,11 @@ while($row=mysqli_fetch_assoc($fetch)){
 		$repeated_data=true;
 	}
 }
-if($repeated_data){
-echo "<script>alert('You have given the same username or password as another user, please try another way')</script>";
-}
-else{
+if(!$repeated_data){
 add("users",$array,$values,"log-in-main.php");
 }
-
 }
+// it signs in the user and get set SESSIONS and depends if the role is user or admin then 
 if(isset($_POST['sub'])){
 $username=	mysqli_real_escape_string($connection,$_POST['username1']);
 	$password=mysqli_real_escape_string($connection,$_POST['password1']);

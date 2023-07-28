@@ -1,7 +1,5 @@
-
-    
-    <?php
-include "includes/header-dashboard.php";
+<?php
+include "includes/header-dashboard.php";//include this file header
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -280,10 +278,11 @@ include "includes/header-dashboard.php";
 <input class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="sub" value="Search">
 </form>
 <?php
-if(isset($_POST['sub'])&&!empty($_POST['search'])){
-	$search="";
-	switch($_POST['mySelect']){
+if(isset($_POST['sub'])&&!empty($_POST['search'])){// if its set $_POST['sub'] and if it not empty the search input
+	$search="";//set to "" search variable
+	switch($_POST['mySelect']){// switch in POST['mySelect'] which in cases will be switched for what we want to search and then select the quetions with what is in the field's value
 		case 'pyetje':
+			
 			$search=$_POST['search'];
 			$query="SELECT * from faq where pyetje='$search'";
 			$fetch=mysqli_query($connection,$query);
@@ -295,8 +294,7 @@ if(isset($_POST['sub'])&&!empty($_POST['search'])){
 
 }
 else{
-?>
-<?php
+// if its empty search or not pressed button search then call showtable function with table name faq and not array
 $not=array();
 $table="faq";
 showtable("faq",$not);
@@ -329,84 +327,82 @@ showtable("faq",$not);
 	</div>
 
     <script>
-        var array=[];
-	$('a.edit').click(function(){
-var id = $(this).attr('id');
-if(isNaN(id)){
-	var id2=parseInt(id);
+        var array=[];// empty array
+	$('a.edit').click(function(){// when <a class="edit" is clicked is called this function
+var id = $(this).attr('id');//get the id of element
+if(isNaN(id)){//check if its not an number
+	var id2=parseInt(id);//get the int value of id
 }
 else{
-	var id2=id;
+	var id2=id;//if not get the id assigned in id2
 }
-$('#hidden').val(id2);
+$('#hidden').val(id2);// push the value of variable id2 in element of hidden ID 
 	})
-$('input.check').click(function(){
-	var check = false;
-  var id = $(this).attr('id');
+$('input.check').click(function(){// when <a class="edit" is clicked is called this function
+	var check = false;// set check to false
+  var id = $(this).attr('id');// get id value
 
-  for (var i = 0; i < array.length; i++) {
-    if (array[i] === id) {
+  for (var i = 0; i < array.length; i++) {// iterate in all elements
+    if (array[i] === id) {// if id value is in array then pop it beaceaus is double clicked
       array.pop(array[i]);
-      check = true;
-      break;
+      check = true;// set check true 
+      break;// break from loop
 	}
   }
 
-  if ((check === false || array.length === 0)&&check!=true) {
+  if ((check === false || array.length === 0)&&check!=true) {// check if its false or length of array is 0 and check isnt true(is false) and push it in array
     array.push(id);
   }
-  var el=document.getElementById('special');
-if(array.length>0){
-    el.value=array;
+  var el=document.getElementById('special');// get element with id special
+if(array.length>0){// if length of arrayis morethan 0 go inside scope
+    el.value=array;// vlue of that DOM element make it array
 }
-  console.log(array);
 	})
-    function funksioni(){
+    function funksioni(){// create an function to open modal
         const module = document.getElementById('deleteEmployeeModal');
         module.show();
     }
     </script>
     <?php
-     if (isset($_POST['submitedit'])) {
-		if(true){
-		$id=intval($_POST['id']);
-		$array=["pergjigje"];
-		$values=[$_POST['per']];
-	    edit("faq",$id,$array,$values);
-		 echo("<script>window.location.href='faq_d.php'</script>");
+     if (isset($_POST['submitedit'])) {// if its clicked input submit with class=submitedit
+		$id=intval($_POST['id']);//id is intvalue of POST['id']
+		$array=["pergjigje"];//array is with value of fields that are for edited
+		$values=[$_POST['per']];// value for those fields
+	    edit("faq",$id,$array,$values);// call edit function with tablename id and array of fields and its valued as an array too
+		 echo("<script>window.location.href='faq_d.php'</script>");//reload page
 }
-}
-if(isset($_POST['delete'])){
-    $id=intval($_POST['spec']);
-    $all="";
-    if(empty($_POST['spec'])){
-        $query="Delete from  faq";
-        $query=mysqli_query($connection,$query);
+
+if(isset($_POST['delete'])){// if its set POST['delete']
+    $id=intval($_POST['spec']);// get the id value in an input
+    $all="";// all is ""
+    if(empty($_POST['spec'])){// if its empty POST['spec'] enter in scope
+        $query="Delete from  faq";//delete all fro faq
+        $query=mysqli_query($connection,$query);//send request for query DELETE from faq
     }
-    else if(strpos($_POST['spec'], ',') !== false){
-        $array = explode(",", $_POST['spec']);
-        for($i=0;$i<count($array);$i++){
-            $temp=intval($array[$i]);
-            $query="delete from faq WHERE ID=$temp";
-            mysqli_query($connection,$query);
+    else if(strpos($_POST['spec'], ',') !== false){// if there is an comma go inside scope
+        $array = explode(",", $_POST['spec']);//create an array with element as much as , has +1 
+        for($i=0;$i<count($array);$i++){//iterate inside array
+            $temp=intval($array[$i]);// get the value of array in i index
+            $query="delete from faq WHERE ID=$temp";//delete all from faq 
+            mysqli_query($connection,$query);// send request
         }
     }
     else{
-        $query="delete from faq WHERE ID=$id";
-        mysqli_query($connection,$query);
+        $query="delete from faq WHERE ID=$id";// delte from table where ID is same with variable id
+        mysqli_query($connection,$query);// send request
     }
-echo("<script>window.location.href='faq_d.php'</script>");
+echo("<script>window.location.href='faq_d.php'</script>");// reload page
 }
-if(isset($_GET['delete'])){
-	$id = intval($_GET['delete']);
-    if ($id > 0) {
+if(isset($_GET['delete'])){// if its set GET delete go inside scope
+	$id = intval($_GET['delete']);// get that delete variable
+    if ($id > 0) {// if is id>0
         // Assuming $connection is properly defined
-        $query = "Delete from faq where ID=?";
-        $stmt = mysqli_prepare($connection, $query);
-        mysqli_stmt_bind_param($stmt, "i", $id);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
+        $query = "Delete from faq where ID=?";// query for any ID that we want to reuse after
+        $stmt = mysqli_prepare($connection, $query);//prepare the query
+        mysqli_stmt_bind_param($stmt, "i", $id);// send the id
+        mysqli_stmt_execute($stmt);// excecute the query
+        mysqli_stmt_close($stmt);// close the stmt variable
     }
-    echo("<script>window.location.href='user_d.php'</script>");
+    echo("<script>window.location.href='user_d.php'</script>");//reload page
 }
     ?>

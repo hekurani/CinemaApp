@@ -149,6 +149,8 @@ echo "Welcome ".$_SESSION['username'];
 	if(!isset($check2)){
 		$check2=false;
 	}
+	// if its not pressed search and then show all from table that date that is showing more than today and
+	// if its clicked search and its written something then show all that we are searching for
 if(!isset($_POST['sub'])|| empty($_POST['search'])){
 	$query = "SELECT * from movies_post";
 	$fetch = mysqli_query($connection, $query);

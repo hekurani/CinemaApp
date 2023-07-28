@@ -340,6 +340,7 @@ a {
     <div id="container">
   </div>
 <script>
+	// using AJAX when is onload function to iserd data from an API that is created inside the file systems as JSON and gets the data and inserts in an DOM element in html 
 	var data2='';
     window.onload=function(){
 var xhr=new XMLHttpRequest();
@@ -372,10 +373,10 @@ element2+= ` <div class="card">
 xhr.open('GET', 'data//env.json', true);
 xhr.send();
     }
+	// function for filtring an element when is searched and to check and get from JSON files all products with that name
 const funksioni=(event)=>{
 var	element2='';
 	event.preventDefault();
-	console.log(data2);
 	if(document.getElementById('ser').value!==""){
 		console.log(data2);
 	for(let element in data2){

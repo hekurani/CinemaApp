@@ -1,5 +1,5 @@
-<?php include "dbconnection.php";//require();
-
+<?php include "dbconnection.php";// include dbconnection
+//searchdb function it insers in table the value of search 
 function Search_db($search_input){
     global $connection;
     $query = "INSERT INTO search (content) VALUES (?)";
@@ -14,7 +14,7 @@ mysqli_stmt_close($statement);
         echo "Error: " . mysqli_error($connection);
     }
 }
-
+// this function gets as an parameter the tablename and returns the column names ofthat table 
 function getColumnNames($tableName) {
     global $connection;
     $query = "SELECT COLUMN_NAME
@@ -41,7 +41,7 @@ function getColumnNames($tableName) {
  
     return $columnNames;
  }
-
+//insert data from table for check box 
 function data_insert($tabela){
    global $connection;
    $query="Select * from $tabela";
@@ -83,8 +83,7 @@ function data_insert($tabela){
    mysqli_close($connection);
    return $word;
 }
-$check=false;
-
+// insert values in table
 function add($table,$array=[], $values = [],$webpage) {
  global $connection; 
 if (count($array) == count($values)) {
@@ -119,37 +118,40 @@ if (count($array) == count($values)) {
 
 // echo "<script>window.location=".$webpage."</script>";
 }
+// check validate and  check if current page isnot in log in page and its not set SESSION  then take that to login page
+// if its set username and page that we are in is login then if role of that is user then cha current page 
 function validate(){
     global $check;
     $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1); 
     if(!isset($_SESSION['username'])&&!isset($_SESSION['password'])&&$curPageName!="log-in-main.php"){
-        $check=true;
         echo "<script>window.location='../log_in/log-in-main.php'</script>";
     }
     $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);  
     if(isset($_SESSION['username'] )&& $curPageName=="log-in-main.php"){
         if($_SESSION['role']=="admin"||$_SESSION['role']=="superadmin"){
-            header("Location: ../admin/dashboard.php");//header(Location)
+            header("Location: ../admin/dashboard.php");
 
         }
         else{
-        header("Location: ../users/Movies_prova.php");//header(Location)
+        header("Location: ../users/Movies_prova.php");
         }
     }
     
 }
+// if faq session is not set then take the page to movies_prova that means that it is user not admin or superadmin
 function validate2(){
 if(!isset($_SESSION['faqja'])  ){
         echo "<script>window.location.href='./../users/Movies_prova.php'</script>";
     }
 }
+// if this page of admin tha is specified is not in current page then take back in the page that is specified
 function validate3($link){
     $curPageName = substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
     if(!strpos($curPageName,$link)){
 echo "<script>window.location.href='$link'</script>";
     }
     }
-
+// delete product in the table as an parameter and by id in parameter
 function delete_product($tabela,$id){
    global $connection;
    $query="DELETE FROM $tabela WHERE ID=$id";
@@ -158,6 +160,7 @@ function delete_product($tabela,$id){
        echo "<script>alert('it didnt work this action')</script>";
    }
    }
+   // edit function and edit by values and array of field names and id that we want to edit
    function edit($table, $id,$array=[], $values = []) {
       global $connection;
       if(count($array)==count($values)){
@@ -178,12 +181,7 @@ function delete_product($tabela,$id){
       }
    }
 }
-function search($table,$value,$array,$page){
-    global $connection;
-    $query="SELECT * from $table where $array=$value";
-    $fetch=mysqli_query($connection,$query);
-    return $fetch;
-}  
+// show tablesearch shows table where the field name that is in showtable parameter and then returns based on what we searched
 function showtablesearch($table,$notallowedcolumns=[],$column,$search){
     global $connection;
    $query="Select * from $table WHERE $column='$search'";
@@ -372,6 +370,7 @@ else{
 }
 echo  $return;
 }
+// show all table and as an parameter is name of table and notallowedcolumn which is that this columns shall not be included
 function showtable($table,$notallowedcolumns=[]){
    global $connection;
    $query="Select * from $table";
@@ -560,7 +559,7 @@ else{
 }
 echo  $return;
 }
-
+// showtable2 is used to show table at some specifiic table that the function upthere showed some errorss
 function showtable2($table,$notallowedcolumns=[],$fetch){
     global $connection;
     if(!$fetch){

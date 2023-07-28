@@ -234,7 +234,8 @@ body {
 </head>
 <body>
   <header>
-    <?php
+    <?
+    // get the id when its clicked with GET variable and show thats movie
     if(isset($_GET['edit'])){
       $id=$_GET['edit'];
       $query="SELECT * from movies_post where ID=$id";
@@ -284,7 +285,8 @@ echo $row['content'];
     let currentRating =<?php
  echo $rating->GetRating($_GET['edit'],$_SESSION['ID'])
 ?>;
-    console.log(currentRating);
+// here it is to fillstar when its hovered the stars then it adds an class hover which is in CSS makes it yellow when clicked get the data
+// and all stars permanently been yellow which add another class
 fillStars(currentRating);
     let hoveredRating = 0;
 
@@ -331,4 +333,3 @@ console.log(data);
   </script>
 </body>
 </html> 
-<!-- ./../'.$row['videoURL']. -->

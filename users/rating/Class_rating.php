@@ -1,4 +1,6 @@
 <?php
+// here it is an class with database connection and then destrucor when application is over to destroy from memory
+// it checks in FORMAT function if it has an value of stars and if not then add if it has thn update it and get rating it gives the reating o that user in that mvie if it has rating
 class Rating {
 // Database credentials
  private $host     = 'localhost:3307';
@@ -46,5 +48,5 @@ return 0;
 }
 }
 }
-$rating = new Rating();
+$rating = new Rating();// creating an object of rating
 ?>

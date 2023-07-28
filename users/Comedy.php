@@ -114,12 +114,14 @@
 </head>
 <body>
 	<?php
+	// here are included the header_test file and dbconnection 
 	include "includes_user//header_test.php";
 	include "../includes/dbconnection.php";
 	validate();
 	if(!isset($check2)){
 		$check2=false;
 	}
+	// it shows all the COMEDY gendres and searches if in the search input is written something
 if(!isset($_POST['sub'])){
 	$query = "SELECT * from movies_post WHERE Zhandri LIKE '%Comedy%'";
 	$fetch = mysqli_query($connection, $query);

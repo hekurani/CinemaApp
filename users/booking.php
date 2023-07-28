@@ -50,7 +50,8 @@ validate();
         <label for="movie">Movie(Salla-Filmi-cmimi):</label>
         <select class="form-control" id="movie" name="movie">
          <?php
-          $query="SELECT * from movies_post";
+         // it shows movies that are showing after today or today but not what is has been showed but anyway that is in database its not deleted to database 
+         $query="SELECT * from movies_post";
           $fetch=mysqli_query($connection,$query);
         $return="";  
           while($row=mysqli_fetch_assoc($fetch)){
@@ -111,7 +112,7 @@ include "includes_user//footer.php"
 </html>
 
 <?php
-
+// if it books the ticket then tickets are saved and if there's no tickets left it shows an alert message that you cant buy these amount of tickets because the stock is full
 
 if(isset($_POST['sub'])){
   $selectedOption = $_POST['movie'];

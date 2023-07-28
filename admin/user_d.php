@@ -1,5 +1,5 @@
         <?php
-include "includes/header-dashboard.php";
+include "includes/header-dashboard.php";// include header file 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -271,8 +271,8 @@ include "includes/header-dashboard.php";
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+	// function for setting DOM element visible or hidden depends 
 function unableadmin(element){
-    console.log(1);
     if(element==true){
         document.getElementById('Yeas').style.visibility="hidden";
     }
@@ -282,7 +282,6 @@ function unableadmin(element){
 }
 </script>
 <form id="formm" method="POST" class="form-inline ml-auto">
-    
 <select name="mySelect">
 	  <option value="username">username:</option>
 </select>
@@ -290,6 +289,7 @@ function unableadmin(element){
 	<input class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="sub" value="Search">
 </form>      
 <?php
+// if its not empty search input then go inside of scope and set search to whats in input and show all table users with that searched field that it chooses  
 if(isset($_POST['sub'])&&!empty($_POST['search'])){
 	$search=$_POST['search'];
 	$array=array();
@@ -297,6 +297,7 @@ if(isset($_POST['sub'])&&!empty($_POST['search'])){
 	 showtablesearch($table,$array,"username",$search);
 }
 else{
+	// here it shows all the table
 $array=array();
 $table="users";
  showtable($table,$array);
@@ -379,6 +380,8 @@ $table="users";
 	</div>
 	<!-- Delete Modal HTML -->
 <script>
+	// here it is how we get the id of a element DOM and then id is id of the one row ID that we want to edit
+	//and then pushes it into an input hidden value
  var array=[];
 	$('a.edit').click(function(){
 var id = $(this).attr('id');
@@ -390,6 +393,7 @@ else{
 }
 $('#hidden').val(id2);
 	})
+	// here it is how we get an id from the delete when we want to delete an row and get the ID of the deleted row and pushes into an DOM element with id hidden
 $('a.delete').click(function(){
 var id = $(this).attr('id');
 if(isNaN(id)){
@@ -401,7 +405,7 @@ else{
 console.log(id);
 $('#hidden2').val(id2);
 	})
-
+// here it is how we get all id of every check box thay we click and we want to delete them
 $('input.check').click(function(){
 	var check = false;
   var id = $(this).attr('id');
@@ -421,34 +425,23 @@ $('input.check').click(function(){
 if(array.length>0){
     el.value=array;
 }
-  console.log(array);
-	})
+})
+// this function is for showing modal
     function funksioni(){
         const module = document.getElementById('deleteEmployeeModal');
         module.show();
     }
-
-                 // Get the form and input elements
-    //             var form = document.getElementById('myform');
-    //             var input = document.getElementById('myInput');
-
-    //             // Set the value of the input element
-    //             input.value = 'Your value here';
-
-    //             // Submit the form
-    //             form.submit();
-    //         });
-    //     });
-	
 </script>
 </body>
 </html>
 <?php
-
+// here it explains how we can add an row to table users
 if(isset($_POST['submitadd'])){
-	// isset($_POST['name']) && isset($_FILES['image']) && isset($_POST['content'])&& isset($_POST['viti']) && isset($_POST['Titulli']) && isset($_FILES['movie'])
+	// here it checks if there are not any empty input
 	if(isset($_POST['name']) && isset($_FILES['image']) && isset($_POST['gender'])&& isset($_POST['password'])&&isset($_POST['email'])){
-$post_image=$_FILES['image']['name'];
+// gets the image and upload it in folder images and checks if it is admin or user role and then create an array of field names
+// and values and inserti into table and reload page
+		$post_image=$_FILES['image']['name'];
 $post_temp_file=$_FILES['image']['tmp_name'];
 move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
 if($_POST['role']=="admin"){
@@ -464,21 +457,8 @@ add("users",$array,$values,"user_d.php");
 echo "<script>window.location.href='user_d.php'</script>";
 }
 }
-
-
-?>
-<?php
-
-
-
-?>
-<?php
-	// validate();
-	// session_start();
-	// validate2($_SESSION['faqja']);
-	// session_destroy();
-    // DONE
-    if(isset($_POST['delete'])){
+// here it is if delete input type='submit' is clicked and then get all the id that we want to delete and delete all the ids that are in inpiut hidden inserted with values before    
+if(isset($_POST['delete'])){
 		$id=intval($_POST['spec']);
 		$all="";
 		if(empty($_POST['spec'])){
@@ -500,6 +480,8 @@ echo "<script>window.location.href='user_d.php'</script>";
 		}
 echo("<script>window.location.href='user_d.php'</script>");
 	}
+// here it is when we want to delete just one row and we use GET super variable and when we click that we will
+//get the id and delete from the table rows with ID as id variable and set disabled to 0 or 1 depends if it is deleted or update so it doesnt delte all from database
 if(isset($_GET['id'])){
 	$id = $_GET['id'];
 	$id = intval($id); // Sanitize the input by converting to an integer
@@ -517,46 +499,7 @@ if(isset($_GET['id'])){
 		echo "Invalid ID parameter.";
 	}
 }
-// 	echo "<script>alert('Kosovo polje')</script>";
-// 		if(true){
-// 		$post_image=$_FILES['image']['name'];
-// 		$post_video=$_FILES['movie']['name'];
-// 		$post_temp_file=$_FILES['image']['tmp_name'];
-// 		$post_temp2=$_FILES['movie']['tmp_name'];
-// 		$id=getid();
-// 		$query="SELECT * FROM movies_post where ID=$id";
-// 		$fetch=mysqli_query($connection,$query);
-// 		if($fetch){
-// 		while($row=mysqli_fetch_assoc($fetch)){
-// $delete_image=$row['image_url'];
-// $delete_video=$row['videoURL'];
-// $file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";
-// $file_path2 = "C:/xampp/htdocs/MOVIES/videos/$delete_video";
-// if (file_exists($file_path1)&&file_exists($file_path2)) {
-//     if (unlink($file_path)) {
-//     } else {
 
-//     }
-// }
-//  else {
-//     // File does not exist
-//     echo "File not found";
-// echo "<script>alert('hyri')</script>";
-// }
-        
-// 		}
-// 	}
-// 		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
-// 		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos/$post_video");
-
-// 		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content"];
-// 		$values=["Hekuran","images/" . $post_image,"sfja", date('Y-m-d H:i:s'),$_POST['viti'],"videos/".$post_video,$_POST['content']];
-// 	edit("movies_post",$id,$array,$values);
-// }
-// }
-// else{
-// 	echo "<h1 style='color:red'>'hek'</h1>";
-// }
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     if ($id > 0) {
@@ -569,4 +512,4 @@ if (isset($_GET['delete'])) {
     }
     echo("<script>window.location.href='user_d.php'</script>");
 }
-// ?> 
+ ?> 

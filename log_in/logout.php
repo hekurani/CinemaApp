@@ -1,4 +1,5 @@
 <?php
+// include the file dbconnection and unset the values of sessions and destroy sessions and reload the page 
 include "../includes/dbconnection.php";
 session_start();
 $id_1=$_SESSION['ID'];

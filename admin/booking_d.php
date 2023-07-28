@@ -1,5 +1,5 @@
 <?php
-include "includes/header-dashboard.php";
+include "includes/header-dashboard.php";//include file header-dashboard in folder includes which is file for importing header in web page
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -268,16 +268,17 @@ include "includes/header-dashboard.php";
 		<input class="btn btn-outline-primary my-2 my-sm-0" type="submit" name="sub" value="Search">
 	</form> 
 <?php
+//Here is the logic of showing table which is function which is included in header-dashboard and includes the table with each data
 if(isset($_POST['sub'])&&!empty($_POST['search'])){
-	$search=$_POST['search'];
-	$array=array();
-	$table="user_ticket";
-	switch($_POST['mySelect']){
+	$search=$_POST['search'];//get the search value
+	$array=array();//empty array
+	$table="user_ticket";//tables name
+	switch($_POST['mySelect']){// Switch cases for 
 case 'username':
-	 showtablesearch($table,$array,"user_name",$search);
+	 showtablesearch($table,$array,"user_name",$search);// show table for search value in field that was choosen in select 
 	break;
 	case 'movies':
-		showtablesearch($table,$array,"movie_name",$search);
+		showtablesearch($table,$array,"movie_name",$search);// same for each case but with different field
 		break;
 		case 'cmimi':
 			showtablesearch($table,$array,"cmimi",$search);
@@ -288,7 +289,7 @@ case 'username':
 	}
 
 }
-else{
+else{// If there are no search value then showtable for all
 $array=array();
 $table="user_ticket";
  showtable($table,$array);
@@ -356,17 +357,18 @@ $table="user_ticket";
 		</div>
 	</div>	
 <script>
-	var array=[];
-	$('a.edit').click(function(){
-var id = $(this).attr('id');
+	var array=[];//empty array
+	$('a.edit').click(function(){// in element a and attribute class .edit when it is clicked and then include function
+var id = $(this).attr('id');//Get that ID of a .edit
 if(isNaN(id)){
-	var id2=parseInt(id);
+	var id2=parseInt(id);//Convert in int id
 }
 else{
 	var id2=id;
 }
-$('#hidden').val(id2);
+$('#hidden').val(id2);// In hidden input push the ID value 
 	})
+	//same logic downhere as edit
 $('a.delete').click(function(){
 var id = $(this).attr('id');
 if(isNaN(id)){
@@ -378,7 +380,9 @@ else{
 console.log(id);
 $('#hidden2').val(id2);
 	})
-
+// when is clicked the input with class check then this function is excecuted and gets id of this attribute and for every array
+//element it looks if that element excists in array of checked list and if not it pushes if yes it pops out that elemnt because it is double clicked
+// and if array is empty then dont push the value in input but if it has something then push it into input
 $('input.check').click(function(){
 	var check = false;
   var id = $(this).attr('id');
@@ -419,18 +423,18 @@ if(array.length>0){
  // Assign a default value to $id
 
 
-
+// if theinput with name submit edit is clicked then get that ID with name id in input hidden maybe it is old school but i wanted to explain this way of excecuting the edit in admin 
 	 if (isset($_POST['submitedit'])) {
-		if(true){
 		$id=intval($_POST['id']);
-		$query="SELECT * FROM user_ticket WHERE ID=$id";
-		$fetch=mysqli_query($connection,$query);
-		while($row=mysqli_fetch_assoc($fetch)){
-			$buy=$row['buy_tickets'];
+		$query="SELECT * FROM user_ticket WHERE ID=$id";// string of selection all elements in user_ticket which ID's has value of id there
+		$fetch=mysqli_query($connection,$query);//fetch from database
+		while($row=mysqli_fetch_assoc($fetch)){//foreach every row in database
+			$buy=$row['buy_tickets'];//get the elemnts in db with that id 
 			$salla=$row['Salla'];
 			$name=$row['movie_name'];
 			$phone=$row['phone'];
 		}
+		// if the superglobal variables from inputs ehith that name is empty then initialize value of that POST variable to the one we eant to edit
 if(empty($_POST['Buy'])){
 	$_POST['Buy']=$buy;
 }
@@ -443,71 +447,32 @@ if(empty($_POST['phone2'])){
 if(empty($_POST['Salla'])){
 	$_POST['Salla']=$salla;
 }
-		$array=["movie_name","	buy_tickets","Salla",'phone'];
-		$values=[$_POST['movie'],$_POST['Buy'],$_POST['Salla'],$_POST['phone2']];
+		$array=["movie_name","	buy_tickets","Salla",'phone'];// array of name of fields that are for editing
+		$values=[$_POST['movie'],$_POST['Buy'],$_POST['Salla'],$_POST['phone2']];//values of the ones field for editing
 	    edit($table,$id,$array,$values);
-		echo("<script>window.location.href='booking_d.php'</script>");
+		echo("<script>window.location.href='booking_d.php'</script>");//header() is alternative for these but i choose to show another way or alternative way of reloading page
+
 }
-}
-    if(isset($_POST['submitdelete'])){
-		$id=intval($_POST['hiden']);
-		$all="";
-		if(empty($_POST['hiden'])){
-			$query="DELETE FROM $table";
-			$query=mysqli_query($connection,$query);
+    if(isset($_POST['submitdelete'])){// if input with name submitdelete is clicked it is true that variable
+		$id=intval($_POST['hiden']);//get the integer value of input
+		$all="";//all variable is empty
+		if(empty($_POST['hiden'])){//if it is empty variable POST['hidden'] is true inside if
+			$query="DELETE FROM $table";//string for deleting all from table variable 
+			$query=mysqli_query($connection,$query);//send the request of deletingquery in server
 		}
 		
-		else if(strpos($_POST['hiden'], ',') !== false){
-			$array = explode(",", $_POST['hiden']);
-		    for($i=0;$i<count($array);$i++){
-				$temp=intval($array[$i]);
-				$query="DELETE from $table WHERE ID=$temp";
-				mysqli_query($connection,$query);
+		else if(strpos($_POST['hiden'], ',') !== false){// if POST['hidden'] includes , and it is not false
+			$array = explode(",", $_POST['hiden']);// create an array from string with comma and create an array of elements as the , are plus 1
+		    for($i=0;$i<count($array);$i++){//iterate in that array
+				$temp=intval($array[$i]);// get the integer value of each element of array and put it in the temp variable
+				$query="DELETE from $table WHERE ID=$temp";//query to delete the table when ID is temp
+				mysqli_query($connection,$query);// send the request in server
 			}
 		}
 		else{
-delete_product($table,$id);
+delete_product($table,$id);// call the function which is declared in includes folder in function.php file
 		}
-echo("<script>window.location.href='booking_d.php'</script>");
+echo("<script>window.location.href='booking_d.php'</script>");// reload the page
 	}
 
-// 	echo "<script>alert('Kosovo polje')</script>";
-// 		if(true){
-// 		$post_image=$_FILES['image']['name'];
-// 		$post_video=$_FILES['movie']['name'];
-// 		$post_temp_file=$_FILES['image']['tmp_name'];
-// 		$post_temp2=$_FILES['movie']['tmp_name'];
-// 		$id=getid();
-// 		$query="SELECT * FROM movies_post where ID=$id";
-// 		$fetch=mysqli_query($connection,$query);
-// 		if($fetch){
-// 		while($row=mysqli_fetch_assoc($fetch)){
-// $delete_image=$row['image_url'];
-// $delete_video=$row['videoURL'];
-// $file_path1 = "C:/xampp/htdocs/MOVIES/images/$delete_image";
-// $file_path2 = "C:/xampp/htdocs/MOVIES/videos/$delete_video";
-// if (file_exists($file_path1)&&file_exists($file_path2)) {
-//     if (unlink($file_path)) {
-//     } else {
-
-//     }
-// }
-//  else {
-//     // File does not exist
-//     echo "File not found";
-// echo "<script>alert('hyri')</script>";
-// }
-// 		}
-// 	}
-// 		move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
-// 		move_uploaded_file($post_temp2,"C:/xampp/htdocs/MOVIES/videos/$post_video");
-
-// 		$array=["Tittle","image_url","Zhandri","Viti_filmit","Data_e_vendosjes","videoURL","content"];
-// 		$values=["Hekuran","images/" . $post_image,"sfja", date('Y-m-d H:i:s'),$_POST['viti'],"videos/".$post_video,$_POST['content']];
-// 	edit("movies_post",$id,$array,$values);
-// }
-// }
-// else{
-// 	echo "<h1 style='color:red'>'hek'</h1>";
-// }
 // ?> 
