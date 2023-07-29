@@ -446,11 +446,13 @@ $post_temp_file=$_FILES['image']['tmp_name'];
 move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
 if($_POST['role']=="admin"){
     $array=["username","password","profile_picture","email","gjinia","roli","specifikimet"];
-    $values=[$_POST['name'],$_POST['password'],"images/" . $post_image,$_POST['email'], $_POST['gender'],$_POST['role'],$_POST['specifikat']];    
+    $values=[$_POST['name'],password_hash($_POST['password'], 
+	PASSWORD_DEFAULT),"images/" . $post_image,$_POST['email'], $_POST['gender'],$_POST['role'],$_POST['specifikat']];    
 }
 else{
 $array=["username","password","profile_picture","email","gjinia","roli"];
-$values=[$_POST['name'],$_POST['password'],"images/" . $post_image,$_POST['email'], $_POST['gender'],$_POST['role']];
+$values=[$_POST['name'],password_hash($_POST['password'], 
+PASSWORD_DEFAULT),"images/" . $post_image,$_POST['email'], $_POST['gender'],$_POST['role']];
 }
 add("users",$array,$values,"user_d.php");  
 

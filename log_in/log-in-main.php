@@ -325,11 +325,11 @@ success:function(data){
 $check=false;
 if(isset($_POST['submit'])){
 $array=["username","password","email","profile_picture","gjinia","roli"];
-$post_image=$_FILES['image']['name'];
-$post_temp_file=$_FILES['image']['tmp_name'];
+$post_image=$_FILES['image']['name'];//$_FILES['image']['name']
+$post_temp_file=$_FILES['image']['tmp_name'];//$_FILES['image']['tmp_name']
 move_uploaded_file($post_temp_file,"C:/xampp/htdocs/MOVIES/images/$post_image");
 $values=[$_POST['username'],password_hash($_POST['password'], 
-PASSWORD_DEFAULT),$_POST['email'],$post_image,$_POST['gender'],"user"];
+PASSWORD_DEFAULT),$_POST['email'],"images/".$post_image,$_POST['gender'],"user"];
 $query="SELECT * FROM users";
 $fetch=mysqli_query($connection,$query);
 $repeated_data=false;
@@ -345,10 +345,10 @@ add("users",$array,$values,"log-in-main.php");
 }
 // it signs in the user and get set SESSIONS and depends if the role is user or admin then 
 if(isset($_POST['sub'])){
-$username=	mysqli_real_escape_string($connection,$_POST['username1']);
-	$password=mysqli_real_escape_string($connection,$_POST['password1']);
-	$check=false;
-	$query="SELECT * FROM users";
+$username=mysqli_real_escape_string($connection,$_POST['username1']);
+$password=mysqli_real_escape_string($connection,$_POST['password1']);
+$check=false;
+$query="SELECT * FROM users";
 global $id;
 	$fetch=mysqli_query($connection,$query);
 	if($fetch){

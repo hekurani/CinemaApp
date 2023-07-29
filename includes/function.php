@@ -312,7 +312,7 @@ $arrayelement="";
         if(!in_array($columnName[$i],$notallowedcolumns,true)){
             if(isset($row[$columnName[$i]])){
                 if($columnName[$i]=="image_url"|| $columnName[$i]=="profile_picture"){
-$arrayelement.='<td style="width: 200px; height: 200px;"><img style="max-width: 100%; max-height: 100%;" src=./../'.$row[$columnName[$i]].' /></td>';
+$arrayelement.='<td style="width: 200px; height: 200px;"><img style="max-width: 100%; max-height: 100%;" src=./../images/'.$row[$columnName[$i]].' /></td>';
                 }
                 else if($columnName[$i]=="videoURL"){
                     $arrayelement.='<td style="width: 200px; height: 200px;"><video style="max-width: 100%; max-height: 100%;" src=./../'.$row[$columnName[$i]].' </video></td>';
@@ -501,7 +501,7 @@ $arrayelement="";
         if(!in_array($columnName[$i],$notallowedcolumns,true)){
             if(isset($row[$columnName[$i]])){
                 if($columnName[$i]=="image_url"|| $columnName[$i]=="profile_picture"){
-$arrayelement.='<td style="width: 200px; height: 200px;"><img style="max-width: 100%; max-height: 100%;" src=./../'.$row[$columnName[$i]].' /></td>';
+$arrayelement.='<td style="width: 200px; height: 200px;"><img style="max-width: 100%; max-height: 100%;" src=./../images/'.$row[$columnName[$i]].' /></td>';
                 }
                 else if($columnName[$i]=="videoURL"){
                     $arrayelement.='<td style="width: 200px; height: 200px;"><video style="max-width: 100%; max-height: 100%;" src=./../'.$row[$columnName[$i]].' </video></td>';
