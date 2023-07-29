@@ -1,4 +1,4 @@
-    <?php
+<?php
 include "includes/header-dashboard.php";// include the header-dashboard file whuch includes all header in this page
 ?>
 <!DOCTYPE html>
@@ -340,16 +340,16 @@ $table="sallat";
 					</div>
 					<div class="form-group">
 							<label>Salla:</label>
-							<input type="text" name="Salla2" class="form-control" accept="video/*" required>
+							<input type="text" name="Salla2" class="form-control" >
 						</div>
                         <div class="form-group">
 							<label>Kapaciteti:</label>
-							<input type="number" name="Kapaciteti2" class="form-control" accept="video/*" required>
+							<input type="number" name="Kapaciteti2" class="form-control">
 						</div> 
                         <input type="number" name="hid" id="hidden" style="display:none;">
                         <div class="form-group">
 							<label>Rezolucioni:</label>
-							<input type="text" name="Rez2" class="form-control" accept="video/*" required>
+							<input type="text" name="Rez2" class="form-control" >
 						</div>
 					</div> 
 					<div class="modal-footer">
@@ -451,6 +451,22 @@ echo "<script>window.location.href='Salla_d.php'</script>";// reload page
 	 if (isset($_POST['submitedit'])) {
 		$id=intval($_POST['hid']);
             $array=['salla_name','Nr_Uleseve','Rezolucioni'];
+			$query="SELECT * FROM sallat";
+			$fetch=mysqli_query($connection,$query);
+			while($row=mysqli_fetch_assoc($fetch)){
+				$salla=$row['salla_name'];
+				$ulese=$row['Nr_Uleseve'];
+				$rezolucioni=$row['Rezolucioni'];
+			}
+			if(empty($_POST['Salla2'])){
+				$_POST['Salla2']=$salla;
+			}
+			if(empty($_POST['Kapaciteti2'])){
+				$_POST['Kapaciteti2']=$ulese;
+			}
+			if(empty($_POST['Rez2'])){
+				$_POST['Rez2']==$rezolucioni;
+			}
 		$values=[$_POST['Salla2'],intval($_POST['Kapaciteti2']),$_POST['Rez2']];
 	    edit($table,$id,$array,$values);
 		echo("<script>window.location.href='Salla_d.php'</script>");// reload the page

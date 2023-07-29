@@ -496,6 +496,10 @@ $header.='<th>'.$columnName[$i].'</th>';
                     </thead>';
    }
                    while($row=mysqli_fetch_assoc($fetch)){
+                    if(isset($row['roli'])&& $row['roli']==='superadmin'){
+
+                    }
+                    else{
 $arrayelement="";
       for($i=0;$i<count($columnName);$i++){
         if(!in_array($columnName[$i],$notallowedcolumns,true)){
@@ -556,6 +560,7 @@ else{
 </div>
 </div>        
 </div>';
+                   }
 }
 echo  $return;
 }

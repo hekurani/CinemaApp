@@ -1,4 +1,4 @@
-        <?php
+<?php
 include "includes/header-dashboard.php";// include header file 
 ?>
 <!DOCTYPE html>
@@ -463,8 +463,13 @@ echo "<script>window.location.href='user_d.php'</script>";
 if(isset($_POST['delete'])){
 		$id=intval($_POST['spec']);
 		$all="";
+		$query="SELECT ID from users where roli='admin'";
+		$fetch=mysqli_query($connection,$query);
+		while($row=mysqli_fetch_row($fetch)){
+			$superadminid=$row['ID'];
+		}
 		if(empty($_POST['spec'])){
-			$query="UPDATE users SET disabled=1";
+			$query="UPDATE users SET disabled=1 where ID <> $superadminid";
 			$query=mysqli_query($connection,$query);
 		}
 		
@@ -472,12 +477,12 @@ if(isset($_POST['delete'])){
 			$array = explode(",", $_POST['spec']);
 		    for($i=0;$i<count($array);$i++){
 				$temp=intval($array[$i]);
-				$query="Update users SET disabled=1 WHERE ID=$temp";
+				$query="Update users SET disabled=1 WHERE ID=$temp and ID <> $superadminid";
 				mysqli_query($connection,$query);
 			}
 		}
 		else{
-            $query="Update users SET disabled=1 WHERE ID=$id";
+            $query="Update users SET disabled=1 WHERE ID=$id and ID <> $superadminid";
             mysqli_query($connection,$query);
 		}
 echo("<script>window.location.href='user_d.php'</script>");
@@ -505,8 +510,12 @@ if(isset($_GET['id'])){
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
     if ($id > 0) {
-        // Assuming $connection is properly defined
-        $query = "UPDATE users SET disabled = 1 WHERE ID = ?";
+		$query="SELECT ID from users where roli='admin'";
+		$fetch=mysqli_query($connection,$query);
+		while($row=mysqli_fetch_row($fetch)){
+			$superadminid=$row['ID'];
+		}
+        $query = "UPDATE users SET disabled = 1 WHERE ID = ? and ID <> $superadminid";
         $stmt = mysqli_prepare($connection, $query);
         mysqli_stmt_bind_param($stmt, "i", $id);
         mysqli_stmt_execute($stmt);
