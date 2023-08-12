@@ -250,7 +250,7 @@ color:#f5f5f5;
 					</div>
 					<div class="group">
                         <label for="pass" class="label">choose profile-image</label>
-                        <input type="file" id="pass" name="image" type="file" class="input" placeholder="Enter Email">
+                        <input type="file" id="pass" name="image" class="input" placeholder="Enter Email">
                     </div>
 					<div class="group">
 					<label>
@@ -361,7 +361,7 @@ $id=$row['ID'];
 $check=true;
 $_SESSION['ID']=$id;
 $_SESSION['profile']=$row['profile_picture'];
-if(empty($_SESSION['profile'])){
+if($_SESSION['profile']==='images/'){
 	if($row['gjinia']=="male"){
 $_SESSION['profile']="avatar_men.jpg";
 	}
