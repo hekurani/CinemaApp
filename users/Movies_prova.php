@@ -165,6 +165,9 @@ if(!isset($_POST['sub'])|| empty($_POST['search'])){
 				$fetch2=mysqli_query($connection,"SELECT AVG(rate) as rt FROM rating WHERE ProductID=$id");
 				$row2=mysqli_fetch_assoc($fetch2);
 				$rate=$row2['rt'];
+				if(!isset($rate)){
+$rate=4.5;
+				}
 			$check = 1;
 			$return .= '<div class="card movie_card">
 			<img src="./../' . $row['image_url'] . '" class="card-img-top" alt="...">
